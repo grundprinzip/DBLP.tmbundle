@@ -126,7 +126,8 @@ class DBLPQuery
 
 end
 
-if __FILE__ == $0 and ARGV.size > 0
-  q = DBLPQuery.new
-  puts q.query(ARGV[0], true)
-end
+
+q = DBLPQuery.new
+result = q.query("Hyrise")
+plist = { 'menuItems' : result.collect{|e| e[:title]} }.to_plist
+res = OSX::PropertyList::load(`"$DIALOG" -up #{e_sh plist}`)
