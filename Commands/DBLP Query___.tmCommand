@@ -17,7 +17,7 @@
 	<key>keyEquivalent</key>
 	<string>^D</string>
 	<key>name</key>
-	<string>Find Paper</string>
+	<string>Query DBLP</string>
 	<key>output</key>
 	<string>insertAsText</string>
 	<key>uuid</key>
