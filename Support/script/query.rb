@@ -6,7 +6,11 @@ require SUPPORT + '/lib/osx/plist'
 
 require 'net/http'
 require 'rubygems'
-require 'json'
+begin
+  require 'ajson'
+rescue LoadError => e
+  require ENV['TM_BUNDLE_SUPPORT'] + '/script/lib/json'
+end
 require 'ostruct'
 
 class DBLPQuery
@@ -155,6 +159,6 @@ else
   TextMate.exit_discard() unless res.has_key? 'selectedMenuItem'
 
   # final touches
-  puts "\\cite{#{res['selectedMenuItem']['cite']}}"
+  print( "\\cite{#{res['selectedMenuItem']['cite']}} ")
 
 end

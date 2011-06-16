@@ -18,9 +18,9 @@ To install without Git:
     mkdir -p ~/Library/Application\ Support/TextMate/Bundles
     cd ~/Library/Application\ Support/TextMate/Bundles
     wget http://github.com/grundprinzip/DBLP.tmbundle/tarball/master
-    tar zxf grundprinzip-dblp*.tar.gz
-    rm grundprinzip-dblp*.tar.gz
-    mv grundprinzip-dblp* "DBLP.tmbundle"
+    tar zxf grundprinzip-DBLP*.tar.gz
+    rm grundprinzip-DBLP*.tar.gz
+    mv grundprinzip-DBLP* "DBLP.tmbundle"
     osascript -e 'tell app "TextMate" to reload bundles'
 
 
