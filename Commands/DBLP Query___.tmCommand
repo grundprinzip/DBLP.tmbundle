@@ -20,6 +20,8 @@
 	<string>Query DBLP</string>
 	<key>output</key>
 	<string>insertAsText</string>
+	<key>scope</key>
+	<string>text.tex.latex</string>
 	<key>uuid</key>
 	<string>602612CA-282C-47F4-BA5D-9AF9F028D9CD</string>
 </dict>
