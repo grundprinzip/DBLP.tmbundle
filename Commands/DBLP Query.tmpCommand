@@ -7,7 +7,8 @@
 	<key>command</key>
 	<string>
 	 RUBYLIB="$TM_BUNDLE_SUPPORT/lib:$RUBYLIB"
-	 "${TM_RUBY:=ruby}" "script/query.rb" 
+	 "${TM_RUBY:=ruby}" "${TM_BUNDLE_SUPPORT}/script/query.rb"
+	 
 	</string>
 	<key>fallbackInput</key>
 	<string>none</string>
@@ -18,7 +19,7 @@
 	<key>name</key>
 	<string>Find Paper</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>insertAsText</string>
 	<key>uuid</key>
 	<string>650DC1AA-887A-485C-BCE3-FAD499BFB54A</string>
 </dict>

@@ -1,3 +1,9 @@
+SUPPORT = ENV['TM_SUPPORT_PATH']
+
+require SUPPORT + '/lib/escape'
+require SUPPORT + '/lib/exit_codes'
+require SUPPORT + '/lib/osx/plist'
+
 require 'net/http'
 require 'rubygems'
 require 'json'
@@ -70,6 +76,7 @@ class DBLPQuery
         return @result.to_json
       end
 
+      @result
     else
       res.error!
     end
@@ -93,12 +100,12 @@ class DBLPQuery
       
       obj = {}
       # First Cell is the cite key
-      obj[:cite] = "DBLP:" << cells[0][0].match(/href="http:\/\/dblp\.uni-trier\.de\/rec\/bibtex\/(.*?)">/)[1]
+      obj['cite'] = "DBLP:" << cells[0][0].match(/href="http:\/\/dblp\.uni-trier\.de\/rec\/bibtex\/(.*?)">/)[1]
 
       # second cell the link to the electronic version
 
       # Third cell is author + title
-      obj[:title] = cells[2][0].gsub(/<.*?>/,"")
+      obj['title'] = cells[2][0].gsub(/<.*?>/,"")
 
       result << obj
     end
@@ -127,7 +134,27 @@ class DBLPQuery
 end
 
 
-q = DBLPQuery.new
-result = q.query("Hyrise")
-plist = { 'menuItems' : result.collect{|e| e[:title]} }.to_plist
-res = OSX::PropertyList::load(`"$DIALOG" -up #{e_sh plist}`)
+if ARGV.size > 0
+  q = DBLPQuery.new
+  result = q.query("Hyrise")
+  puts result
+else
+
+  input_text = `CocoaDialog inputbox --title "DBLP" --informative-text "Query" --button1 "OK" --button2 "Cancel"`
+  splitted = input_text.split("\n")
+  
+  TextMate.exit_discard() unless splitted[0] == "1"
+
+  q = DBLPQuery.new
+  result = q.query(splitted[1])
+  TextMate.exit_show_tool_tip( "No papers found ") if result.empty?
+
+  plist = { 'menuItems' => result }.to_plist
+  res = OSX::PropertyList::load(`"$DIALOG" -up #{e_sh plist}`)
+
+  TextMate.exit_discard() unless res.has_key? 'selectedMenuItem'
+
+  # final touches
+  puts "\\cite{#{res['selectedMenuItem']['cite']}}"
+
+end
